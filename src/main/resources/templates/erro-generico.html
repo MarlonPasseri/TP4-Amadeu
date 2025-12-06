@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Erro</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header>
+    <h1>Erro no Sistema</h1>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/produtos}">Produtos</a>
+        <a th:href="@{/pedidos}">Pedidos</a>
+    </nav>
+</header>
+<main>
+    <section class="mensagens">
+        <div class="alert error" th:text="${erroMensagem}">Erro genérico.</div>
+    </section>
+
+    <section>
+        <p>Ocorreu um problema ao processar sua requisição. Se o problema persistir, contate o suporte.</p>
+    </section>
+</main>
+<footer>
+    <small>Mensagens de erro seguras, sem exposição de detalhes internos.</small>
+</footer>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TP4 - Sistema Integrado</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header>
+    <h1>Sistema Integrado - Catálogo &amp; Pedidos</h1>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/produtos}">Produtos</a>
+        <a th:href="@{/pedidos}">Pedidos</a>
+    </nav>
+</header>
+<main>
+    <section class="mensagens">
+        <div th:if="${mensagemSucesso}" class="alert success" th:text="${mensagemSucesso}"></div>
+        <div th:if="${erroMensagem}" class="alert error" th:text="${erroMensagem}"></div>
+    </section>
+
+    <section>
+        <h2>Resumo de Produtos</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${produtos}">
+                <td th:text="${p.id}">1</td>
+                <td th:text="${p.nome}">Produto</td>
+                <td th:text="${p.precoRaw}">0.00</td>
+                <td th:text="${p.quantidadeRaw}">0</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(produtos)}">
+                <td colspan="4">Nenhum produto cadastrado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Resumo de Pedidos</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Criado em</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${pedidos}">
+                <td th:text="${p.id}">1</td>
+                <td th:text="${p.produto.nome}">Produto</td>
+                <td th:text="${p.quantidadeRaw}">1</td>
+                <td th:text="${#temporals.format(p.criadoEm, 'dd/MM/yyyy HH:mm')}">data</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(pedidos)}">
+                <td colspan="4">Nenhum pedido criado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<footer>
+    <small>TP4 - Integração de sistemas, refatoração e CI/CD.</small>
+</footer>
+</body>
+</html>

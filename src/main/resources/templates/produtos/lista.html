@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Produtos</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header>
+    <h1>Catálogo de Produtos</h1>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/produtos}">Produtos</a>
+        <a th:href="@{/pedidos}">Pedidos</a>
+    </nav>
+</header>
+<main>
+    <section class="mensagens">
+        <div th:if="${mensagemSucesso}" class="alert success" th:text="${mensagemSucesso}"></div>
+        <div th:if="${erroMensagem}" class="alert error" th:text="${erroMensagem}"></div>
+    </section>
+
+    <section>
+        <div class="top-bar">
+            <h2>Produtos</h2>
+            <a class="btn" th:href="@{/produtos/novo}">Novo Produto</a>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${produtos}">
+                <td th:text="${p.id}">1</td>
+                <td th:text="${p.nome}">Produto</td>
+                <td th:text="${p.precoRaw}">0.00</td>
+                <td th:text="${p.quantidadeRaw}">0</td>
+                <td>
+                    <a th:href="@{'/produtos/' + ${p.id} + '/editar'}">Editar</a>
+                    <form th:action="@{'/produtos/' + ${p.id} + '/excluir'}"
+                          method="post"
+                          style="display:inline"
+                          onsubmit="return confirmarExclusao();">
+                        <button type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(produtos)}">
+                <td colspan="5">Nenhum produto cadastrado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<footer>
+    <small>TP4 - Sistema de Catálogo integrado.</small>
+</footer>
+<script>
+    function confirmarExclusao() {
+        return confirm('Tem certeza que deseja excluir este produto?');
+    }
+</script>
+</body>
+</html>

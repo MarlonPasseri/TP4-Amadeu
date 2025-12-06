@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${produto.id} == null ? 'Novo Produto' : 'Editar Produto'">Produto</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header>
+    <h1>Catálogo de Produtos</h1>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/produtos}">Produtos</a>
+        <a th:href="@{/pedidos}">Pedidos</a>
+    </nav>
+</header>
+<main>
+    <section class="mensagens">
+        <div th:if="${mensagemSucesso}" class="alert success" th:text="${mensagemSucesso}"></div>
+        <div th:if="${erroMensagem}" class="alert error" th:text="${erroMensagem}"></div>
+    </section>
+
+    <section>
+        <h2 th:text="${produto.id} == null ? 'Novo Produto' : 'Editar Produto'"></h2>
+
+        <form th:action="${produto.id} == null ? @{/produtos} : @{'/produtos/' + ${produto.id}}"
+              th:object="${produto}"
+              method="post">
+            <div class="campo">
+                <label for="nome">Nome</label>
+                <input id="nome" type="text" th:field="*{nome}" required maxlength="100">
+                <span class="erro" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Erro</span>
+            </div>
+
+            <div class="campo">
+                <label for="descricao">Descrição</label>
+                <textarea id="descricao" th:field="*{descricao}" maxlength="255"></textarea>
+                <span class="erro" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}">Erro</span>
+            </div>
+
+            <div class="campo">
+                <label for="precoRaw">Preço</label>
+                <input id="precoRaw" type="number" step="0.01" th:field="*{precoRaw}" required>
+                <span class="erro" th:if="${#fields.hasErrors('precoRaw')}" th:errors="*{precoRaw}">Erro</span>
+            </div>
+
+            <div class="campo">
+                <label for="quantidadeRaw">Quantidade em Estoque</label>
+                <input id="quantidadeRaw" type="number" min="0" th:field="*{quantidadeRaw}" required>
+                <span class="erro" th:if="${#fields.hasErrors('quantidadeRaw')}" th:errors="*{quantidadeRaw}">Erro</span>
+            </div>
+
+            <div class="acoes">
+                <button type="submit">Salvar</button>
+                <a th:href="@{/produtos}">Cancelar</a>
+            </div>
+        </form>
+    </section>
+</main>
+<footer>
+    <small>TP4 - Sistema de Catálogo integrado.</small>
+</footer>
+</body>
+</html>

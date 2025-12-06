@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedidos</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header>
+    <h1>Sistema de Pedidos</h1>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/produtos}">Produtos</a>
+        <a th:href="@{/pedidos}">Pedidos</a>
+    </nav>
+</header>
+<main>
+    <section class="mensagens">
+        <div th:if="${mensagemSucesso}" class="alert success" th:text="${mensagemSucesso}"></div>
+        <div th:if="${erroMensagem}" class="alert error" th:text="${erroMensagem}"></div>
+    </section>
+
+    <section>
+        <div class="top-bar">
+            <h2>Pedidos</h2>
+            <a class="btn" th:href="@{/pedidos/novo}">Novo Pedido</a>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Criado em</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${pedidos}">
+                <td th:text="${p.id}">1</td>
+                <td th:text="${p.produto.nome}">Produto</td>
+                <td th:text="${p.quantidadeRaw}">1</td>
+                <td th:text="${#temporals.format(p.criadoEm, 'dd/MM/yyyy HH:mm')}">data</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(pedidos)}">
+                <td colspan="4">Nenhum pedido criado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<footer>
+    <small>TP4 - Sistema de Pedidos integrado ao Catálogo.</small>
+</footer>
+</body>
+</html>
