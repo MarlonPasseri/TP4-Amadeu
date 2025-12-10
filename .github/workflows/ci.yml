@@ -27,7 +27,7 @@ jobs:
       - name: Build e Testes (Gradle)
         run: |
           echo "::group::Iniciando build TP4 🛠️"
-          ./gradlew clean build --no-daemon
+          gradle clean build --no-daemon
           echo "::endgroup::"
 
       - name: Publicar relatório de cobertura Jacoco
