@@ -24,8 +24,12 @@ jobs:
       - name: Configurar Gradle
         uses: gradle/actions/setup-gradle@v3
 
+      # ✅ usa o wrapper do projeto, igual você faz na máquina
       - name: Build e Testes (Gradle)
-        run: gradle clean build --no-daemon
+        run: |
+          echo "::group::Iniciando build TP4 🛠️"
+          ./gradlew clean build --no-daemon
+          echo "::endgroup::"
 
       - name: Publicar relatório de cobertura Jacoco
         if: always()
